@@ -56,6 +56,7 @@ Lung Cancer Detection Project/
 └── requirements.txt        # Python dependencies
 
 
+
 🚀 Running the Project
 
 1.Train the model :  python train_model.py
@@ -66,6 +67,22 @@ Lung Cancer Detection Project/
 
 
 
+📂 Dataset Download
+
+The dataset used in this project is stored on Google Drive.
+
+👉 Click here to download the dataset
+
+[Click here to download the dataset](https://drive.google.com/drive/folders/1Q4dzFZP-P5CLKX6XWonhQzs3_Ok2L5cL?usp=drive_link)
+
+Instructions:
+
+1.After downloading, place the dataset inside the project directory in a folder named dataset/.
+
+2,Make sure the folder structure matches the one used in the project code.
+
+
+
 📚 Dataset Details
 
 -Dataset Name: The IQ-OTH/NCCD Lung Cancer Dataset
@@ -73,6 +90,9 @@ Lung Cancer Detection Project/
 -Contains lung CT scan images categorized for lung cancer detection.
 
 -Dataset is split into training, testing, and validation using split_dataset.py.
+
+
+
 
 🔥 Grad-CAM (Heatmap) Visualization
 
@@ -101,7 +121,6 @@ heatmap = generate_gradcam(model, processed_image, 'last_conv_layer_name')
 
 # Overlay heatmap on original image
 overlay_image = overlay_heatmap(uploaded_image_path, heatmap)
-
 
 
 📄 PDF Report Generation
