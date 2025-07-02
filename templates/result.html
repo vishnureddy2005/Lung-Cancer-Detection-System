@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prediction Result</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #f0f0f0, #d9f4ff);
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 30px;
+            font-size: 32px;
+        }
+
+        .diagnosis {
+            font-size: 24px;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        .benign {
+            background-color: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+
+        .malignant {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .image-grid img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 10px;
+            border: 2px solid #333;
+        }
+
+        .buttons {
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        .download-btn {
+            background-color: green;
+            color: white;
+        }
+
+        .predict-btn {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        /* Toast Message */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+            font-size: 17px;
+        }
+
+        #toast.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 3s;
+        }
+
+        @keyframes fadein {
+            from { bottom: 0; opacity: 0; }
+            to { bottom: 30px; opacity: 1; }
+        }
+
+        @keyframes fadeout {
+            from { bottom: 30px; opacity: 1; }
+            to { bottom: 0; opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body onload="showToast()">
+
+    <div class="container">
+        <h2>🩺 Diagnosis Result</h2>
+
+        {% if result.lower() == 'malignant' %}
+            <div class="diagnosis malignant">
+                ⚠️ The person is likely to have LUNG CANCER. Please consult a medical professional immediately.
+            </div>
+        {% else %}
+            <div class="diagnosis benign">
+                ✅ Good News: The person does not have lung cancer.
+            </div>
+        {% endif %}
+
+        <h3 style="margin-top: 20px;">Confidence: {{ confidence }}%</h3>
+
+        <div class="image-grid">
+            <div>
+                <h3>Original X-ray Image</h3>
+                <img src="/{{ img_path }}" alt="X-ray Image">
+            </div>
+            <div>
+                <h3>Heatmap Visualization</h3>
+                <img src="/{{ heatmap_path }}" alt="Heatmap Image">
+            </div>
+        </div>
+
+        <div class="buttons">
+            <a href="/{{ pdf_path }}" class="btn download-btn" download>Download PDF Report</a>
+            <a href="/" class="btn predict-btn">Predict Another</a>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast">Prediction Completed Successfully ✅</div>
+
+    <script>
+        function showToast() {
+            var toast = document.getElementById("toast");
+            toast.className = "show";
+            setTimeout(function () { toast.className = toast.className.replace("show", ""); }, 4000);
+        }
+    </script>
+
+</body>
+</html>
