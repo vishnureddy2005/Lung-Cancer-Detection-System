@@ -1,0 +1,13 @@
+# Exclude datasets
+dataset/
+The IQ-OTHNCCD lung cancer dataset/
+Test cases/
+
+# Exclude large files
+*.pdf
+*.h5
+*.db
+
+# Python cache
+__pycache__/
+*.pyc
